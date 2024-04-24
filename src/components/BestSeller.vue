@@ -1,22 +1,27 @@
 <template>
+  <!-- your answer -->
   <v-container>
     <v-row>
-      <v-col cols="12" sm="6" md="4" lg="3" 
-        v-for="product in bestSellers"
-        :key="product.id">
+      <v-col
+        v-for="product in bestSellerProducts"
+        :key="product.id"
+        cols="12"
+        sm="6"
+        md="4"
+        lg="3"
+      >
         <StoreItem :product="product" />
       </v-col>
     </v-row>
   </v-container>
 </template>
 
-<script setup lang="ts">
-import { computed } from 'vue';
-import StoreItem from './StoreItem.vue';
+<script lang="ts" setup>
+import StoreItem from './StoreItem.vue'; 
 import { useProductStore } from '../stores/ProductStore';
 
 const productStore = useProductStore();
 
-const bestSellers = computed(() => 
-productStore.filterByRating(4.5));
+const bestSellerProducts = productStore.filterByRating(4.5);
+
 </script>

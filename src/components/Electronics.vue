@@ -1,7 +1,15 @@
 <template>
-  <v-container fluid>
+  <!-- your answer -->
+  <v-container>
     <v-row>
-      <v-col cols="12" sm="6" md="4" lg="3" v-for="product in products" :key="product.id">
+      <v-col
+        v-for="product in filteredProducts"
+        :key="product.id"
+        cols="12"
+        sm="6"
+        md="4"
+        lg="3"
+      >
         <StoreItem :product="product" />
       </v-col>
     </v-row>
@@ -9,17 +17,11 @@
 </template>
 
 <script lang="ts" setup>
-import StoreItem from './StoreItem.vue';
-import { onMounted } from 'vue';
-import { useProductStore } from '../stores/ProductStore';
-import { ref } from "vue";
-import { ProductDoc } from '../types/product';
+import StoreItem from './StoreItem.vue'; 
+import { useProductStore } from '../stores/ProductStore'; 
 
 const productStore = useProductStore();
-const products = ref<ProductDoc[]>([]);
 
-onMounted(() => {
-  productStore.filterByCategory('Electronics');
-  products.value = productStore.products;
-});
+const filteredProducts = productStore.filterByCategory('Electronics');
+
 </script>

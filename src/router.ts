@@ -1,9 +1,9 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import HomeView from "./components/Home.vue";
-import ClothingView from "./components/Clothing.vue";
-import ElectronicsView from "./components/Electronics.vue";
-import GroceriesView from "./components/Groceries.vue";
-import BestSellerView from "./components/BestSeller.vue";
+import Clothing from "./components/Clothing.vue";
+import Electronics from "./components/Electronics.vue";
+import Groceries from "./components/Groceries.vue";
+import BestSeller from "./components/BestSeller.vue";
 const routes = [
   {
     path: "/",
@@ -11,26 +11,27 @@ const routes = [
     props: true,
     component: HomeView,
   },
+  // you need to add more routes here
   {
     path: "/clothing",
     name: "clothing",
-    component: ClothingView, 
+    component: Clothing,
   },
   {
     path: "/electronics",
     name: "electronics",
-    component: ElectronicsView, 
+    component: Electronics,
   },
   {
     path: "/groceries",
     name: "groceries",
-    component: GroceriesView, 
+    component: Groceries,
   },
   {
     path: "/bestseller",
     name: "bestseller",
-    component: BestSellerView, 
-  }
+    component: BestSeller,
+  },
 ];
 
 const router = createRouter({
