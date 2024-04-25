@@ -46,6 +46,8 @@
 import { ref, reactive } from "vue";
 import { useProductStore } from "./stores/ProductStore";
 import { ProductDoc } from "./types/product";
+import { collection, addDoc } from "firebase/firestore"; // Import Firestore functions directly
+import myapp
 
 const links = ref([
   { text: "Home", to: "/", icon: "mdi-home" },
@@ -65,6 +67,8 @@ const newProduct = reactive<ProductDoc>({
     price: 0,
     rating: 0,
     stock: 0,
+    image: "",
+    category: ""
   },
 });
 
@@ -75,14 +79,19 @@ const addProduct = async () => {
 const saveProduct = async () => {
   const confirmed = confirm("Are you sure you want to add this item?");
   if (confirmed) {
-    await productStore.addItemToFirestore(newProduct);
-    showDialog.value = false; // Close the dialog after adding
-    // Reset newProduct object for next use
-    newProduct.data.name = "";
-    newProduct.data.description = "";
-    newProduct.data.price = 0;
-    newProduct.data.rating = 0;
-    newProduct.data.stock = 0;
+    try {
+      const productsCollection = collection(myapp, "products"); // Use myapp instead of db
+      await addDoc(productsCollection, newProduct.data);
+      showDialog.value = false; // Close the dialog after adding
+      // Reset newProduct object for next use
+      newProduct.data.name = "";
+      newProduct.data.description = "";
+      newProduct.data.price = 0;
+      newProduct.data.rating = 0;
+      newProduct.data.stock = 0;
+    } catch (error) {
+      console.error("Error adding product to Firestore: ", error);
+    }
   }
 };
 
